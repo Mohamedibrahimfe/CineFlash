@@ -520,6 +520,9 @@ main {
   text-align: left;
 }
 
+.owl-carousel-info-wrap img:hover{
+  cursor: pointer;
+}
 .owl-carousel-info {
   background-color: var(--section-bg-color);
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
@@ -798,8 +801,8 @@ main {
 
 .profile-block-image {
   border-radius: var(--border-radius-large);
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   object-fit: cover;
   margin-right: 10px;
 }
@@ -807,6 +810,7 @@ main {
 .profile-block p strong {
   display: block;
   font-family: var(--title-font-family);
+  margin-top: 2px;
 }
 
 .profile-detail-block {
