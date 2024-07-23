@@ -1,4 +1,4 @@
-fetch('https://api.themoviedb.org/3/discover/movie?api_key=7014728ebc18e1989f4fc892bc7e02a2')
+fetch(`${baseUrl}/discover/movie?api_key=${apiKey}`)
   .then(response => response.json())
   .then(function(data) {
     let movies=data.results
@@ -6,7 +6,7 @@ fetch('https://api.themoviedb.org/3/discover/movie?api_key=7014728ebc18e1989f4fc
     movies.map(movie=>{
         let content=`
          <div onclick="getMovieDetails(${movie.id})" class="owl-carousel-info-wrap item">
-                                    <img onclick="scroll()" src="${baseImageUrl}${movie.poster_path}" class="owl-carousel-image img-fluid" alt="">
+                                    <img src="${baseImageUrl}${movie.poster_path}" class="owl-carousel-image img-fluid" alt="">
                                     <img src="images/${movie.adult ? 'verified':'18'}.png" class="owl-carousel-verified-image img-fluid" alt="">
                                     <div class="owl-carousel-info">
                                         <h4 class="mb-2">
@@ -23,7 +23,7 @@ fetch('https://api.themoviedb.org/3/discover/movie?api_key=7014728ebc18e1989f4fc
         center: true,
         loop: true,
         margin: 30,
-        autoplay: false,
+        autoplay: true,
         responsiveClass: true,
         responsive:{
             0:{
@@ -123,13 +123,42 @@ function getMovieDetails(id){
         
 
 function scroll(){
-    // document.getElementById("here").scrollIntoView(true);
+    document.getElementById("searchForm").scrollIntoView(true);
 }
 
-function search(name){
-        fetch('https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1', options)
+
+document.getElementById('searchForm').addEventListener('submit',function(e){
+    e.preventDefault();
+        fetch(`${baseUrl}/search/movie?query=${this.search.value}&include_adult=false&language=en-US&page=1`, options)
         .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
-}
-search()
+        .then(function(response){
+            let moviesGot=response.results;
+            let topicsSection =document.getElementById('search_result')
+            topicsSection.innerHTML=''
+            moviesGot.map(movie=>{
+                console.log(movie)
+            content=`
+            <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                        <div class="custom-block custom-block-overlay">
+                            <a href="# class="custom-block-image-wrap">
+                                <img src="${baseImageUrl}${movie.poster_path}" class="custom-block-image img-fluid" alt="">
+                                </a>
+
+                    <div class="custom-block-info custom-block-overlay-info">
+                        <h5 class="mb-1">
+                            <a href="detail-page.html">
+                                ${movie.original_title}
+                            </a>
+                        </h5>
+
+                        <p class="badge mb-0">${movie.vote_averag}</p>
+                        </div>
+                        </div>
+                        </div>
+            `
+            topicsSection.innerHTML+=content
+            scroll()
+            })
+            
+        })
+})
