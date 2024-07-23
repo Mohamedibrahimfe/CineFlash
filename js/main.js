@@ -144,17 +144,17 @@ document.getElementById('searchForm').addEventListener('submit',function(e){
                                 <img src="${baseImageUrl}${movie.poster_path}" class="custom-block-image img-fluid" alt="">
                                 </a>
 
-                    <div class="custom-block-info custom-block-overlay-info">
-                        <h5 class="mb-1">
-                            <a href="detail-page.html">
-                                ${movie.original_title}
-                            </a>
-                        </h5>
+                            <div class="custom-block-info custom-block-overlay-info">
+                                <h5 class="mb-1">
+                                    <a href="detail-page.html">
+                                    ${movie.original_title}
+                                    </a>
+                                </h5>
 
-                        <p class="badge mb-0">${movie.vote_averag}</p>
+                                <p class="badge mb-0">${movie.vote_average}</p>
+                            </div>
                         </div>
-                        </div>
-                        </div>
+            </div>
             `
             topicsSection.innerHTML+=content
             scroll()
