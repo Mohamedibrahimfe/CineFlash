@@ -1251,4 +1251,10 @@ main {
 }
 #search_result{
   display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+#trending{
+  display: flex;
+  gap: 15px;
 }
