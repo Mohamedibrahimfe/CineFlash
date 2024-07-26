@@ -1,23 +1,24 @@
 fetch(`${baseUrl}/discover/movie?api_key=${apiKey}`)
-  .then(response => response.json())
-  .then(function(data) {
+    .then(response => response.json())
+    .then(function(data) {
     let movies=data.results
 
     movies.map(movie=>{
         let content=`
-         <div onclick="getMovieDetails(${movie.id})" class="owl-carousel-info-wrap item">
-                                    <img src="${baseImageUrl}${movie.poster_path}" class="owl-carousel-image img-fluid" alt="">
-                                    <img src="images/${movie.adult ? 'verified':'18'}.png" class="owl-carousel-verified-image img-fluid" alt="">
-                                    <div class="owl-carousel-info">
-                                        <h4 class="mb-2">
-                                            ${movie.original_title}
-                                        </h4>
-                                        <span class="badge">Lang ${movie.original_language}</span>
-                                        <span class="badge">Rate: ${movie.vote_average}</span>
-                                    </div>
+            <div onclick="getMovieDetails(${movie.id})" class="owl-carousel-info-wrap item">
+                    <img src="${baseImageUrl}${movie.poster_path}" class="owl-carousel-image img-fluid" alt="">
+                    <img src="images/${movie.adult ? 'verified':'18'}.png" class="owl-carousel-verified-image img-fluid" alt="">
+                    <div class="owl-carousel-info">
+                            <h4 class="mb-2">
+                                ${movie.original_title}
+                            </h4>
+                            <span class="badge">Lang ${movie.original_language}</span>
+                            <span class="badge">Rate: ${movie.vote_average}</span>
+                    </div>
+            </div>
         `
         document.querySelector('.owl-carousel').innerHTML+=content
-        scroll()
+        // scroll()
     })
     $('.owl-carousel').owlCarousel({
         center: true,
@@ -118,15 +119,16 @@ function getMovieDetails(id){
                         </div>
                 `
                 latestPodcast.innerHTML=content
+                scroll('land')
         }
         )}
         
 
-function scroll(){
-    document.getElementById("searchForm").scrollIntoView(true);
+function scroll(id){
+    document.getElementById(`${id}`).scrollIntoView(true);
 }
 
-
+//  search
 document.getElementById('searchForm').addEventListener('submit',function(e){
     e.preventDefault();
         fetch(`${baseUrl}/search/movie?query=${this.search.value}&include_adult=false&language=en-US&page=1`, options)
@@ -137,17 +139,19 @@ document.getElementById('searchForm').addEventListener('submit',function(e){
             topicsSection.innerHTML=''
             moviesGot.map(movie=>{
                 console.log(movie)
+                const title=movie.original_title.split("  ")
+                
             content=`
             <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
                         <div class="custom-block custom-block-overlay">
-                            <a href="# class="custom-block-image-wrap">
+                            <a href="detail-page.html" class="custom-block-image-wrap">
                                 <img src="${baseImageUrl}${movie.poster_path}" class="custom-block-image img-fluid" alt="">
-                                </a>
+                            </a>
 
                             <div class="custom-block-info custom-block-overlay-info">
                                 <h5 class="mb-1">
                                     <a href="detail-page.html">
-                                    ${movie.original_title}
+                                    ${title.slice(0, 3)}
                                     </a>
                                 </h5>
 
@@ -157,8 +161,101 @@ document.getElementById('searchForm').addEventListener('submit',function(e){
             </div>
             `
             topicsSection.innerHTML+=content
-            scroll()
+            scroll('search_result')
             })
             
         })
 })
+
+
+fillSearchBeforeSearch()
+function fillSearchBeforeSearch(){
+    let topicsSection =document.getElementById('search_result')
+    fetch(`${baseUrl}/search/movie?query=the&include_adult=false&language=en-US&page=1`, options)
+    .then(response => response.json())
+    .then(function(response){
+        let moviesGot=response.results.slice(0,4)
+        moviesGot.map(movie=>{
+            const title = movie.original_title.split("  ")
+            title.slice(0,3)
+            content= `
+            <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                    <div class="custom-block custom-block-overlay">
+                            <a href="detail-page.html" class="custom-block-image-wrap">
+                                <img src="${baseImageUrl}${movie.poster_path}" class="custom-block-image img-fluid" alt="">
+                            </a>
+                        <div class="custom-block-info custom-block-overlay-info">
+                            <h5 class="mb-1">
+                                <a href="listing-page.html">
+                                    ${title}
+                                </a>
+                            </h5>
+                            <p class="badge mb-0">${movie.vote_average}</p>
+                        </div>
+                    </div>
+            </div>`
+                        topicsSection.innerHTML+=content
+        })
+    })
+
+
+        
+}
+
+
+
+fillTrending()
+function fillTrending(){
+    fetch(`${baseUrl}/trending/movie/week?api_key=${apiKey}&language=en-US&page=1`, options)
+    .then(response => response.json())
+    .then(function(data){
+        let movies=data.results.slice(0,3)
+        trending=document.getElementById('trending')
+        movies.map(movie=>{
+            content=`
+            <div class="col-lg-4 col-12">
+                            <div class="custom-block custom-block-full">
+                                <div class="custom-block-image-wrap">
+                                    <a href="detail-page.html">
+                                        <img src="${baseImageUrl}${movie.poster_path}" class="custom-block-image img-fluid" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="custom-block-info">
+                                    <h5 class="mb-2">
+                                        <a href="detail-page.html">
+                                            ${movie.original_title}
+                                        </a>
+                                    </h5>
+
+                                    <p class="mb-0">${movie.overview}</p>
+
+                                    <div class="custom-block-bottom d-flex justify-content-between mt-3">
+                                        <a href="#" class="bi-heart me-1">
+                                            <span>${movie.vote_average}</span>
+                                        </a>
+
+                                        <a href="#" class="bi-eye me-1">
+                                            <span>${movie.popularity}</span>
+                                        </a>
+
+                                        <a href="#" class="bi-translate me-1">
+                                            <span>${movie.original_language}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="social-share d-flex flex-column ms-auto">
+                                    <a href="#" class="badge ms-auto">
+                                        <i class="bi-heart"></i>
+                                    </a>
+                                    <a href="#" class="badge ms-auto">
+                                        <i class="bi-bookmark"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+            `   
+            trending.innerHTML+=content
+        })
+    })
+}
