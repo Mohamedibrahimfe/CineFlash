@@ -140,48 +140,6 @@ function scroll(id) {
   document.getElementById(`${id}`).scrollIntoView(true);
 }
 
-//  search
-document.getElementById("searchForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  fetch(
-    `${baseUrl}/search/movie?query=${this.search.value}&include_adult=false&language=en-US&page=1`,
-    options
-  )
-    .then((response) => response.json())
-    .then(function (response) {
-      let moviesGot = response.results;
-      let topicsSection = document.getElementById("search_result");
-      topicsSection.innerHTML = "";
-      moviesGot.map((movie) => {
-        console.log(movie);
-        const title = movie.original_title.split("  ");
-
-        content = `
-            <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-                        <div class="custom-block custom-block-overlay">
-                            <a href="detail-page.html" class="custom-block-image-wrap">
-                                <img src="${baseImageUrl}${
-          movie.poster_path
-        }" class="custom-block-image img-fluid" alt="">
-                            </a>
-
-                            <div class="custom-block-info custom-block-overlay-info">
-                                <h5 class="mb-1">
-                                    <a href="detail-page.html">
-                                    ${title.slice(0, 3)}
-                                    </a>
-                                </h5>
-                                <p class="badge mb-0">${movie.vote_average}</p>
-                            </div>
-                        </div>
-            </div>
-            `;
-        topicsSection.innerHTML += content;
-        scroll("search_result");
-      });
-    });
-});
-
 // fill discover section
 fillDiscoverSection();
 function fillDiscoverSection() {
@@ -279,3 +237,44 @@ function fillTrending() {
 
 // homepage final
 // todo: modal with search
+
+//  search
+document.getElementById("searchForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  fetch(
+    `${baseUrl}/search/movie?query=${this.search.value}&include_adult=false&language=en-US`,
+    options
+  )
+    .then((response) => response.json())
+    .then(function (response) {
+        console.log(response.results);
+        response.results.map((movie) => {
+        const title = movie.title.split(" ");
+        title.slice(0, 3);
+        console.log(title);
+        content=`
+            <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                    <div class="custom-block custom-block-overlay">
+                            <a href="detail-page.html" class="custom-block-image-wrap">
+                                <img src="${baseImageUrl}${movie.poster_path}" class="custom-block-image " alt="">
+                            </a>
+                        <div class="custom-block-info custom-block-overlay-info">
+                            <h5 class="mb-1">
+                                <a href="listing-page.html" class="text-white">
+                                    ${title}
+                                </a>
+                            </h5>
+                            <p class="badge bg-dark mb-0">${movie.vote_average}</p>
+                        </div>
+                    </div>
+            </div>`;
+            document.getElementById("searchContainer").innerHTML += content;
+        })
+    });
+    resetForm();
+});
+function resetForm(){
+    document.getElementById("searchContainer").innerHTML = "";
+
+    document.getElementById("searchForm").reset();
+}
