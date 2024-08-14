@@ -1281,3 +1281,12 @@ main {
   height: 300px;
   
 }
+.movie:hover{
+  cursor: pointer;
+  /* transform: scale(1.1); */
+  transition: 0.5s;
+  z-index: 1;
+  background-color: #0066CC;
+  color: white;
+  box-shadow: 0 10px 10px 5px rgba(12, 12, 12, 0.8);
+}
