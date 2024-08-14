@@ -41,12 +41,12 @@ https://templatemo.com/tm-584-pod-talk
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
                     <a class="navbar-brand me-lg-5 me-0" href="index.html">
-                        <img src="images/pod-talk-logo.png" class="logo-image img-fluid" alt="templatemo pod talk">
+                        <img src="images/logo.png" class="logo-image img-fluid" alt="templatemo pod talk">
                     </a>
 
-                    <form action="#" method="get" class="custom-form search-form flex-fill me-3" role="search">
+                    <form action="#" method="get" class="custom-form search-form flex-fill me-3" role="search" id="searchForm">
                         <div class="input-group input-group-lg">    
-                            <input name="search" type="search" class="form-control" id="search" placeholder="Search Podcast" aria-label="Search">
+                            <input name="search" type="search" class="form-control" id="search" placeholder="Search" aria-label="Search">
 
                             <button type="submit" class="form-control" id="submit">
                                 <i class="bi-search"></i>
@@ -67,25 +67,11 @@ https://templatemo.com/tm-584-pod-talk
                             <li class="nav-item">
                                 <a class="nav-link active" href="about.html">About</a>
                             </li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
-
-                                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="listing-page.html">Listing Page</a></li>
-
-                                    <li><a class="dropdown-item" href="detail-page.html">Detail Page</a></li>
-                                </ul>
-                            </li>
     
                             <li class="nav-item">
                                 <a class="nav-link" href="contact.html">Contact</a>
                             </li>
                         </ul>
-
-                        <div class="ms-4">
-                            <a href="#section_2" class="btn custom-btn custom-border-btn smoothscroll">Get started</a>
-                        </div>
                     </div>
                 </div>
             </nav>
@@ -359,12 +345,37 @@ https://templatemo.com/tm-584-pod-talk
             </div>
         </footer>
 
+<!-- modal -->
+<div class="modal modal-xl fade " id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Search</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="searchContainer" class="search-container row g-3 align-items-center justify-content-start">
+              
+              
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
 
         <!-- JAVASCRIPT FILES -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/custom.js"></script>
-
+        <script src="js/private.js"></script>
+        <script src="js/about.js"></script>
     </body>
 </html>

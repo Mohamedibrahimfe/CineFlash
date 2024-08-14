@@ -234,11 +234,7 @@ function fillTrending() {
       });
     });
 }
-
-// homepage final
-// todo: modal with search
-
-//  search
+// search
 document.getElementById("searchForm").addEventListener("submit", function (e) {
   e.preventDefault();
   fetch(
@@ -247,14 +243,19 @@ document.getElementById("searchForm").addEventListener("submit", function (e) {
   )
     .then((response) => response.json())
     .then(function (response) {
-        console.log(response.results);
+        document.getElementById("searchContainer").innerHTML = "";
+        if(this.search.value == ""){
+            return;
+        }
+        const myModal = new bootstrap.Modal(document.getElementById('searchModal'))
+        myModal.show();
         response.results.map((movie) => {
         const title = movie.title.split(" ");
         title.slice(0, 3);
         console.log(title);
         content=`
-            <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-                    <div class="custom-block custom-block-overlay">
+            <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 ">
+                    <div class="custom-block custom-block-overlay movie">
                             <a href="detail-page.html" class="custom-block-image-wrap">
                                 <img src="${baseImageUrl}${movie.poster_path}" class="custom-block-image " alt="">
                             </a>
@@ -271,10 +272,5 @@ document.getElementById("searchForm").addEventListener("submit", function (e) {
             document.getElementById("searchContainer").innerHTML += content;
         })
     });
-    resetForm();
+   
 });
-function resetForm(){
-    document.getElementById("searchContainer").innerHTML = "";
-
-    document.getElementById("searchForm").reset();
-}
