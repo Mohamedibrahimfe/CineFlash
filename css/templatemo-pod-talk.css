@@ -1249,7 +1249,7 @@ main {
   }
 
 }
-#search_result{
+#Discover{
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -1257,4 +1257,13 @@ main {
 #trending{
   display: flex;
   gap: 15px;
+  max-height: 600px;
+}
+#trending img{
+  width: 100%;
+  /* height: 100%; */
+}
+.overview{
+  max-height: 150px;
+  overflow-y: hidden;
 }
