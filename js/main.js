@@ -109,7 +109,7 @@ function getMovieDetails(id) {
                                             <strong>${data.vote_average}</strong></p>
                                     </div>
 
-                                    <p class="mb-0">${data.overview}</p>
+                                    <p class="mb-0 overview">${data.overview}</p>
 
                                     <div class="custom-block-bottom d-flex justify-content-between mt-3">
                                         <a href="#" class="bi-eye me-1">
@@ -184,11 +184,11 @@ function fillTrending() {
   )
     .then((response) => response.json())
     .then(function (data) {
-      let movies = data.results.slice(0, 3);
+      let movies = data.results.slice(0, 4);
       trending = document.getElementById("trending");
       movies.map((movie) => {
         content = `
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
                             <div class="custom-block custom-block-full">
                                 <div class="custom-block-image-wrap">
                                     <a href="detail-page.html">
